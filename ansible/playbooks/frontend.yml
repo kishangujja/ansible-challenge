@@ -1,0 +1,38 @@
+---
+- name: Configure Frontend VM (Amazon Linux)
+  hosts: frontend
+  become: true
+
+  tasks:
+    - name: Disable SELinux
+      ansible.builtin.command:
+        cmd: setenforce 0
+      when: ansible_facts['selinux']['status'] == "enabled"
+
+    - name: Disable firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: stopped
+        enabled: no
+
+    - name: Install nginx
+      ansible.builtin.yum:
+        name: nginx
+        state: present
+
+    - name: Start nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Configure nginx reverse proxy
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: Reload nginx
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
+

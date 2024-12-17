@@ -1,0 +1,30 @@
+---
+- name: Configure Backend VM (Ubuntu)
+  hosts: backend
+  become: true
+
+  tasks:
+    - name: Disable firewalld
+      ansible.builtin.service:
+        name: ufw
+        state: stopped
+        enabled: no
+
+    - name: Install Netdata
+      ansible.builtin.apt:
+        name: netdata
+        state: present
+        update_cache: yes
+
+    - name: Start Netdata service
+      ansible.builtin.service:
+        name: netdata
+        state: started
+        enabled: yes
+
+    - name: Ensure Netdata runs on port 19999
+      ansible.builtin.linein_file:
+        path: /etc/netdata/netdata.conf
+        regexp: '^# bind to ='
+        line: 'bind to = 0.0.0.0:19999'
+
