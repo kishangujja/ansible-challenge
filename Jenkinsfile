@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+         AWS_ACCESS_KEY_ID = credentials('Access Key ID')
+        AWS_SECRET_ACCESS_KEY = credentials('Secret Access Key')
         TF_VAR_FRONTEND_IP = ''
         TF_VAR_BACKEND_IP = ''
     }
