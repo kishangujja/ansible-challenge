@@ -52,7 +52,7 @@ ${env.TF_VAR_BACKEND_IP}
             // Run the Ansible playbook for the frontend VM to install and configure NGINX
             sh '''
             cd ansible
-            ansible-playbook -i inventory/terraform_inventory.ini --private-key /path/to/your/existing/private_key.pem playbooks/frontend.yml
+            ansible-playbook -i inventory/terraform_inventory.ini --private-key devops playbooks/frontend.yml
             '''
         }
     }
@@ -64,7 +64,7 @@ stage('Ansible - Configure Backend') {
             // Run the Ansible playbook for the backend VM to install and configure Netdata
             sh '''
             cd ansible
-            ansible-playbook -i inventory/terraform_inventory.ini --private-key /path/to/your/existing/private_key.pem playbooks/backend.yml
+            ansible-playbook -i inventory/terraform_inventory.ini --private-key devops playbooks/backend.yml
             '''
         }
     }
