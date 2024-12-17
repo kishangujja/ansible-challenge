@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws')  // ID from Jenkins credentials store
         AWS_SECRET_ACCESS_KEY = credentials('aws')  // ID from Jenkins credentials store
-        ANSIBLE_PRIVATE_KEY_FILE = devops
+        ANSIBLE_PRIVATE_KEY_FILE = "devops"
         TF_VAR_FRONTEND_IP = ''
         TF_VAR_BACKEND_IP = ''
     }
