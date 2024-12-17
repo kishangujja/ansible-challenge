@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    cd terraform
+                    cd terraform-ansible-jenkins
                     terraform init
                     terraform apply -auto-approve
                     '''
