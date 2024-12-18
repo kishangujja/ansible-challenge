@@ -31,6 +31,10 @@ resource "aws_instance" "backend" {
               hostnamectl set-hostname u21.local
               EOT
 }
+
+output "backend_ip" {
+  value = aws_instance.backend.public_ip
+}
 resource "local_file" "inventory" {
   filename = "./inventory.yaml"
   content  = <<EOF
@@ -44,9 +48,6 @@ output "frontend_ip" {
 }
 }
 
-output "backend_ip" {
-  value = aws_instance.backend.public_ip
-}
 
 
 
