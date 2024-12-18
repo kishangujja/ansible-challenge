@@ -36,7 +36,7 @@ pipeline {
         stage('Prepare Ansible Inventory') {
             steps {
                 script {
-                    writeFile file: 'ansible/inventory/terraform_inventory.ini', text: """
+                    writeFile file: '/var/lib/jenkins/workspace/ansible-terraform-jenkins/terraform-ansible-jenkins/inventory.yaml', text: """
 [frontend]
 ${env.TF_VAR_FRONTEND_IP}
 
@@ -53,7 +53,7 @@ ${env.TF_VAR_BACKEND_IP}
             // Run the Ansible playbook for the frontend VM to install and configure NGINX
             sh '''
             cd ansible
-            ansible-playbook -i inventory/terraform_inventory.ini --private-key devops playbooks/frontend.yml
+            ansible-playbook -i /var/lib/jenkins/workspace/ansible-terraform-jenkins/terraform-ansible-jenkins/inventory.yaml --private-key devops playbooks/frontend.yml
             '''
         }
     }
@@ -65,7 +65,7 @@ stage('Ansible - Configure Backend') {
             // Run the Ansible playbook for the backend VM to install and configure Netdata
             sh '''
             cd ansible
-            ansible-playbook -i inventory/terraform_inventory.ini --private-key devops playbooks/backend.yml
+            ansible-playbook -i /var/lib/jenkins/workspace/ansible-terraform-jenkins/terraform-ansible-jenkins/inventory.yaml --private-key devops playbooks/backend.yml
             '''
         }
     }
